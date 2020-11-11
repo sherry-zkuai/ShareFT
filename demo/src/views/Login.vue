@@ -87,6 +87,7 @@ export default {
             height: 100%;
             border-radius: 50%;
             background-color: #eeeeee;
+            size: 10%;
         }
     }
 }

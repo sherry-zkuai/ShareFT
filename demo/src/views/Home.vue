@@ -35,7 +35,7 @@ export default {
     return {
       groupList: [
         {
-          id: 0,
+          id: 1,
           groupName: 'aaa'
         }
       ],
@@ -48,7 +48,9 @@ export default {
       this.isCollapse = !this.isCollapse
     },
     gotoGroup (groupId) {
-      this.$router.push('/groupFile?id=' + groupId)
+      window.sessionStorage.setItem('groupId', groupId)
+      // this.$router.push('/groupFile?id=' + groupId)
+      this.$router.push('/groupFile')
     }
   }
 }
@@ -67,6 +69,7 @@ export default {
 
 .el-aside {
   background-color: #202B30;
+  height: 100%;
 }
 
 .el-menu {
@@ -85,5 +88,11 @@ export default {
   display: flex;
   justify-content: flex-end;
   color: #fff;
+}
+.el-main {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #eeeeee;
 }
 </style>
