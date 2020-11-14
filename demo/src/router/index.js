@@ -36,6 +36,10 @@ const routes = [
       {
         path: '/groupFile',
         component: resolve => require(['../views/GroupFile'], resolve)
+      },
+      {
+        path: '/history',
+        component: resolve => require(['../views/History'], resolve)
       }
     ]
   }
