@@ -1,6 +1,5 @@
 <template>
     <el-container class="home_container">
-      <el-header>Header</el-header>
       <el-container>
         <el-aside :width="isCollapse ? '64px' : '200px'">
           <div class="toggle-button" @click="toggleMenu()">
