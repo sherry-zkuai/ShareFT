@@ -70,10 +70,11 @@ export default {
       console.log(this.editorColor)
     },
     change (data) {
-      this.$refs.myQuillEditor.quill.enable(false)
+      // this.$refs.myQuillEditor.quill.enable(false)
       this.currentSource = 'silent'
       // console.log(data)
       var delta = data[1]
+      console.log(delta)
       var newDelta = new Delta()
       for (var i = 0; i < delta.length; i++) {
         // var newDelta1 = new Delta()
@@ -89,13 +90,13 @@ export default {
         // this.articleTitle = this.$refs.myQuillEditor.quill.getText().trim()
       }
       this.$refs.myQuillEditor.quill.updateContents(newDelta, 'silent')
-      this.$refs.myQuillEditor.quill.setSelection(this.$refs.myQuillEditor.quill.getText().length - 1, 0, 'api')
-      console.log(this.$refs.myQuillEditor.quill.getFormat())
+      // this.$refs.myQuillEditor.quill.setSelection(this.$refs.myQuillEditor.quill.getText().length - 1, 0, 'api')
+      // console.log(this.$refs.myQuillEditor.quill.getFormat())
       // this.$refs.myQuillEditor.quill.removeFormat(this.$refs.myQuillEditor.quill.getSelection(true), 1, 'silent')
       this.$refs.myQuillEditor.quill.format('background', '', 'api')
-      console.log(this.$refs.myQuillEditor.quill.getFormat())
+      // console.log(this.$refs.myQuillEditor.quill.getFormat())
       // this.$refs.myQuillEditor.quill.focus()
-      this.$refs.myQuillEditor.quill.enable(true)
+      // this.$refs.myQuillEditor.quill.enable(true)
       // this.$refs.myQuillEditor.quill.setSelection(this.$refs.myQuillEditor.quill.getText().length - 1, 0, 'api')
     }
   },
@@ -158,6 +159,7 @@ export default {
   methods: {
     onEditorChange (e) {
       // this.$refs.myQuillEditor.quill.enable(false)
+      this.$refs.myQuillEditor.quill.format('background', '', 'api')
       var history = this.$refs.myQuillEditor.quill.history
       if (history.lastRecorded !== this.lastRecorded) {
         this.lastRecorded = history.lastRecorded
@@ -170,23 +172,23 @@ export default {
       }
       this.changed = true
       var stack = history.stack
-      console.log(stack)
+      // console.log(stack)
       this.lastRecorded = history.lastRecorded
-      console.log(this.lastRecorded)
+      // console.log(this.lastRecorded)
       if (stack.redo.length === 0) {
-        console.log('undo')
+        // console.log('undo')
         // console.log(stack.undo[0].redo.ops[0])
         var opsInsert = stack.undo[0].redo.ops
         this.changeContent = opsInsert
-        console.log(this.changeContent)
+        // console.log(this.changeContent)
       } else {
-        console.log('redo')
+        // console.log('redo')
         var opsDelete = stack.redo[0].undo.ops
         this.changeContent = opsDelete
       }
       this.currentSource = 'user'
       // this.$refs.myQuillEditor.quill.enable(true)
-      this.$refs.myQuillEditor.quill.setSelection(this.$refs.myQuillEditor.quill.getText().length - 1, 0, 'api')
+      // this.$refs.myQuillEditor.quill.setSelection(this.$refs.myQuillEditor.quill.getText().length - 1, 0, 'api')
     },
     checkChange () {
       if (this.lastRecorded + 1000 < Date.now() && this.currentSource === 'user' && this.changeContent.length !== 0) {
@@ -199,7 +201,7 @@ export default {
     getEditorColor (user) {
       for (var i = 0; i < this.editorColor.length; i++) {
         if (this.editorColor[i].user === user) {
-          console.log(this.editorColor[i].color)
+          // console.log(this.editorColor[i].color)
           return this.editorColor[i].color
         }
       }

@@ -13,7 +13,7 @@ app.all('*', (req, res, next) => {
 var server = require('http').createServer(app)
 var io = require('socket.io')(server, {
   cors: {
-    origin: 'http://localhost:8080',
+    origin: 'http://192.168.0.105:8080',
     methods: ['GET', 'POST'],
     allowedHeaders: ['content-type'],
     credentials: true

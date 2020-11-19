@@ -1,1 +1,9 @@
-node server.js && npm run dev
+server(){
+  node server.js
+}
+
+client(){
+  npm run dev
+}
+
+server & client
