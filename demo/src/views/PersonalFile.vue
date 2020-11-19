@@ -308,6 +308,9 @@ export default {
         }
       }
       this.fileList.splice(index, 1)
+    },
+    getHistory (id) {
+      this.$router.push('/history?id=' + id)
     }
   }
 }
