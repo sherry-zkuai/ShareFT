@@ -47,6 +47,7 @@ export default {
         if (!valid) {
           this.$message.error('请输入正确的登录信息')
         } else {
+          sessionStorage.setItem('userName', this.loginForm.username)
           this.$router.push('/home')
         }
       })

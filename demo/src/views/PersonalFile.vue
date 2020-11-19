@@ -11,207 +11,207 @@
             <div class='welcome-text'>Welcome Back to ShareFT</div>
             <div class="subtext">点击下方按钮，分享你的知识吧</div>
           </div>
-          <el-button type="primary" class="newBtn">新建文档</el-button>
+          <el-button type="primary" class="newBtn" @click="gotoFile(0, true)">新建个人文档</el-button>
         </div>
       </el-col>
       <el-col :span="6"><div class="showImage"><img src="@/assets/folder-icon.png"></div></el-col>
     </el-row>
     <el-row class="middle"><div class="title"><i class="el-icon-s-grid"/>文件列表</div></el-row>
     <el-row class="lower">
-      <el-col :span="6" v-if="fileList.length>0">
+      <el-col :span="6" v-if="fileList.length>currentPage*4-4+0">
         <div class="first">
           <div class="file-icon"><img src="@/assets/file-icon.jpeg"/></div>
-          <div class="file-title">{{fileList[0].title}}</div>
+          <div class="file-title">{{fileList[currentPage*4-4+0].title}}</div>
           <div class="file-editor">
             <span style="float: left; font-size: 13px; color: #ffffff; font-family: 'Microsoft YaHei'; padding-left: 5px; height: 30px; line-height: 30px">
               当前编辑成员
             </span>
             <div class="editor-avatar" style="float: left">
-              <el-tooltip :content="item.name" placement="top" v-for="item in fileList[0].editor.slice(0,3)" :key="item.id">
+              <el-tooltip :content="item.name" placement="top" v-for="item in fileList[currentPage*4-4+0].editor.slice(0,3)" :key="item.id">
                 <span class="avatar" :style="{'background-color':colorlist[Math.floor(Math.random() * colorlist.length)]}">{{item.name.slice(0,1)}}</span>
               </el-tooltip>
-              <span class="avatar" v-if="fileList[0].editor.length>3" style="background-color: #ffffff; color: #aaaaaa; font-size: 13px; font-family: 'Arial">{{'+'+(fileList[0].editor.length-3)}}</span>
+              <span class="avatar" v-if="fileList[currentPage*4-4+0].editor.length>3" style="background-color: #ffffff; color: #aaaaaa; font-size: 13px; font-family: 'Arial">{{'+'+(fileList[currentPage*4-4+0].editor.length-3)}}</span>
             </div>
           </div>
           <div><el-divider></el-divider></div>
           <div class="file-describe">
             <div class="describe-title">文档简介</div>
-            <div class="describe-content">{{fileList[0].description}}</div>
+            <div class="describe-content">{{fileList[currentPage*4-4+0].description}}</div>
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[0].keyword[0]}}
+            {{fileList[currentPage*4-4+0].keyword[0]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[0].keyword[1]}}
+            {{fileList[currentPage*4-4+0].keyword[1]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[0].keyword[2]}}
+            {{fileList[currentPage*4-4+0].keyword[2]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="operation">
-            <el-button type="text">查看</el-button>
-            <el-button type="text">编辑</el-button>
-            <el-button type="text">删除</el-button>
-            <el-button type="text">溯源</el-button>
+            <el-button type="text" @click="gotoFile(fileList[currentPage*4-4+0].id, false)">查看</el-button>
+            <el-button type="text" @click="gotoFile(fileList[currentPage*4-4+0].id, true)">编辑</el-button>
+            <el-button type="text" @click="remove(fileList[currentPage*4-4+0].id)">删除</el-button>
+            <el-button type="text" @click="getHistory(fileList[currentPage*4-4+0].id)">溯源</el-button>
           </div>
           <div class="create-time">
             <i class="el-icon-edit-outline"/>
-            {{'创建于'+fileList[0].createTime}}
+            {{'创建于'+fileList[currentPage*4-4+0].createTime}}
           </div>
         </div>
       </el-col>
-      <el-col :span="6" v-if="fileList.length>1">
+      <el-col :span="6" v-if="fileList.length>currentPage*4-4+1">
         <div class="second">
           <div class="file-icon"><img src="@/assets/file-icon.jpeg"/></div>
-          <div class="file-title">{{fileList[1].title}}</div>
+          <div class="file-title">{{fileList[currentPage*4-4+1].title}}</div>
           <div class="file-editor">
             <span style="float: left; font-size: 13px; color: #ffffff; font-family: 'Microsoft YaHei'; padding-left: 5px; height: 30px; line-height: 30px">
               当前编辑成员
             </span>
             <div class="editor-avatar" style="float: left">
-              <el-tooltip :content="item.name" placement="top" v-for="item in fileList[1].editor.slice(0,3)" :key="item.id">
+              <el-tooltip :content="item.name" placement="top" v-for="item in fileList[currentPage*4-4+1].editor.slice(0,3)" :key="item.id">
                 <span class="avatar" :style="{'background-color':colorlist[Math.floor(Math.random() * colorlist.length)]}">{{item.name.slice(0,1)}}</span>
               </el-tooltip>
-              <span class="avatar" v-if="fileList[1].editor.length>3" style="background-color: #ffffff; color: #aaaaaa; font-size: 13px; font-family: 'Arial">{{'+'+(fileList[1].editor.length-3)}}</span>
+              <span class="avatar" v-if="fileList[currentPage*4-4+1].editor.length>3" style="background-color: #ffffff; color: #aaaaaa; font-size: 13px; font-family: 'Arial">{{'+'+(fileList[currentPage*4-4+1].editor.length-3)}}</span>
             </div>
           </div>
           <div><el-divider></el-divider></div>
           <div class="file-describe">
             <div class="describe-title">文档简介</div>
-            <div class="describe-content">{{fileList[1].description}}</div>
+            <div class="describe-content">{{fileList[currentPage*4-4+1].description}}</div>
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[1].keyword[0]}}
+            {{fileList[currentPage*4-4+1].keyword[0]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[1].keyword[1]}}
+            {{fileList[currentPage*4-4+1].keyword[1]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[1].keyword[2]}}
+            {{fileList[currentPage*4-4+1].keyword[2]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="operation">
-            <el-button type="text">查看</el-button>
-            <el-button type="text">编辑</el-button>
-            <el-button type="text">删除</el-button>
-            <el-button type="text">溯源</el-button>
+            <el-button type="text" @click="gotoFile(fileList[currentPage*4-4+1].id, false)">查看</el-button>
+            <el-button type="text" @click="gotoFile(fileList[currentPage*4-4+1].id, true)">编辑</el-button>
+            <el-button type="text" @click="remove(fileList[currentPage*4-4+1].id)">删除</el-button>
+            <el-button type="text" @click="getHistory(fileList[currentPage*4-4+1].id)">溯源</el-button>
           </div>
           <div class="create-time">
             <i class="el-icon-edit-outline"/>
-            {{'创建于'+fileList[1].createTime}}
+            {{'创建于'+fileList[currentPage*4-4+1].createTime}}
           </div>
         </div>
       </el-col>
-      <el-col :span="6" v-if="fileList.length>2">
+      <el-col :span="6" v-if="fileList.length>currentPage*4-4+2">
         <div class="third">
           <div class="file-icon"><img src="@/assets/file-icon.jpeg"/></div>
-          <div class="file-title">{{fileList[2].title}}</div>
+          <div class="file-title">{{fileList[currentPage*4-4+2].title}}</div>
           <div class="file-editor">
             <span style="float: left; font-size: 13px; color: #ffffff; font-family: 'Microsoft YaHei'; padding-left: 5px; height: 30px; line-height: 30px">
               当前编辑成员
             </span>
             <div class="editor-avatar" style="float: left">
-              <el-tooltip :content="item.name" placement="top" v-for="item in fileList[2].editor.slice(0,3)" :key="item.id">
+              <el-tooltip :content="item.name" placement="top" v-for="item in fileList[currentPage*4-4+2].editor.slice(0,3)" :key="item.id">
                 <span class="avatar" :style="{'background-color':colorlist[Math.floor(Math.random() * colorlist.length)]}">{{item.name.slice(0,1)}}</span>
               </el-tooltip>
-              <span class="avatar" v-if="fileList[2].editor.length>3" style="background-color: #ffffff; color: #aaaaaa; font-size: 13px; font-family: 'Arial">{{'+'+(fileList[2].editor.length-3)}}</span>
+              <span class="avatar" v-if="fileList[currentPage*4-4+2].editor.length>3" style="background-color: #ffffff; color: #aaaaaa; font-size: 13px; font-family: 'Arial">{{'+'+(fileList[currentPage*4-4+2].editor.length-3)}}</span>
             </div>
           </div>
           <div><el-divider></el-divider></div>
           <div class="file-describe">
             <div class="describe-title">文档简介</div>
-            <div class="describe-content">{{fileList[2].description}}</div>
+            <div class="describe-content">{{fileList[currentPage*4-4+2].description}}</div>
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[2].keyword[0]}}
+            {{fileList[currentPage*4-4+2].keyword[0]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[2].keyword[1]}}
+            {{fileList[currentPage*4-4+2].keyword[1]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[2].keyword[2]}}
+            {{fileList[currentPage*4-4+2].keyword[2]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="operation">
-            <el-button type="text">查看</el-button>
-            <el-button type="text">编辑</el-button>
-            <el-button type="text">删除</el-button>
-            <el-button type="text">溯源</el-button>
+            <el-button type="text" @click="gotoFile(fileList[currentPage*4-4+2].id, false)">查看</el-button>
+            <el-button type="text" @click="gotoFile(fileList[currentPage*4-4+2].id, true)">编辑</el-button>
+            <el-button type="text" @click="remove(fileList[currentPage*4-4+2].id)">删除</el-button>
+            <el-button type="text" @click="getHistory(fileList[currentPage*4-4+2].id)">溯源</el-button>
           </div>
           <div class="create-time">
             <i class="el-icon-edit-outline"/>
-            {{'创建于'+fileList[2].createTime}}
+            {{'创建于'+fileList[currentPage*4-4+2].createTime}}
           </div>
         </div>
       </el-col>
-      <el-col :span="6" v-if="fileList.length>3">
+      <el-col :span="6" v-if="fileList.length>currentPage*4-4+3">
         <div class="fourth">
           <div class="file-icon"><img src="@/assets/file-icon.jpeg"/></div>
-          <div class="file-title">{{fileList[3].title}}</div>
+          <div class="file-title">{{fileList[currentPage*4-4+3].title}}</div>
           <div class="file-editor">
             <span style="float: left; font-size: 13px; color: #ffffff; font-family: 'Microsoft YaHei'; padding-left: 5px; height: 30px; line-height: 30px">
               当前编辑成员
             </span>
             <div class="editor-avatar" style="float: left">
-              <el-tooltip :content="item.name" placement="top" v-for="item in fileList[3].editor.slice(0,3)" :key="item.id">
+              <el-tooltip :content="item.name" placement="top" v-for="item in fileList[currentPage*4-4+3].editor.slice(0,3)" :key="item.id">
                 <span class="avatar" :style="{'background-color':colorlist[Math.floor(Math.random() * colorlist.length)]}">{{item.name.slice(0,1)}}</span>
               </el-tooltip>
-              <span class="avatar" v-if="fileList[3].editor.length>3" style="background-color: #ffffff; color: #aaaaaa; font-size: 13px; font-family: 'Arial">{{'+'+(fileList[3].editor.length-3)}}</span>
+              <span class="avatar" v-if="fileList[currentPage*4-4+3].editor.length>3" style="background-color: #ffffff; color: #aaaaaa; font-size: 13px; font-family: 'Arial">{{'+'+(fileList[currentPage*4-4+3].editor.length-3)}}</span>
             </div>
           </div>
           <div><el-divider></el-divider></div>
           <div class="file-describe">
             <div class="describe-title">文档简介</div>
-            <div class="describe-content">{{fileList[3].description}}</div>
+            <div class="describe-content">{{fileList[currentPage*4-4+3].description}}</div>
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[3].keyword[0]}}
+            {{fileList[currentPage*4-4+3].keyword[0]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[3].keyword[1]}}
+            {{fileList[currentPage*4-4+3].keyword[1]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="key-word">
             <i class="el-icon-document"/>
-            {{fileList[3].keyword[2]}}
+            {{fileList[currentPage*4-4+3].keyword[2]}}
           </div>
           <div><el-divider></el-divider></div>
           <div class="operation">
-            <el-button type="text">查看</el-button>
-            <el-button type="text">编辑</el-button>
-            <el-button type="text">删除</el-button>
-            <el-button type="text">溯源</el-button>
+            <el-button type="text" @click="gotoFile(fileList[currentPage*4-4+3].id, false)">查看</el-button>
+            <el-button type="text" @click="gotoFile(fileList[currentPage*4-4+3].id, true)">编辑</el-button>
+            <el-button type="text" @click="remove(fileList[currentPage*4-4+3].id)">删除</el-button>
+            <el-button type="text" @click="getHistory(fileList[currentPage*4-4+3].id)">溯源</el-button>
           </div>
           <div class="create-time">
             <i class="el-icon-edit-outline"/>
-            {{'创建于'+fileList[3].createTime}}
+            {{'创建于'+fileList[currentPage*4-4+3].createTime}}
           </div>
         </div>
       </el-col>
       <div class="page">
-        <el-pagination :total="totalFile" :current-page="currentPage" :page-size="4" @current-change="turnPage()" layout="total, prev, pager, next, jumper" background ></el-pagination>
+        <el-pagination :total="totalFile" :current-page.sync="currentPage" :page-size="4" layout="total, prev, pager, next, jumper" background ></el-pagination>
       </div>
     </el-row>
     <!-- <el-row class="page">
@@ -228,6 +228,7 @@ export default {
       currentPage: 1,
       fileList: [
         {
+          id: 1,
           title: 'Title',
           description: 'lolollllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll',
           keyword: [
@@ -254,6 +255,7 @@ export default {
           ]
         },
         {
+          id: 2,
           title: 'Title2',
           description: 'description2',
           keyword: [],
@@ -261,12 +263,14 @@ export default {
           editor: []
         },
         {
+          id: 3,
           title: 'Title3',
           description: 'description3',
           keyword: [],
           createTime: '2020-11-11 11:11:11',
           editor: []
         }, {
+          id: 4,
           title: 'Title4',
           description: 'description4',
           keyword: [],
@@ -290,7 +294,21 @@ export default {
   },
   created () {},
   methods: {
-    getFileList () {}
+    turnPage () {
+      console.log(this.currentPage)
+    },
+    gotoFile (id, edit) {
+      this.$router.push('/filePage?' + 'fileId=' + id + '&' + 'edit=' + edit)
+    },
+    remove (id) {
+      var index = 0
+      for (var i = 0; i < this.fileList; i++) {
+        if (this.fileList[i].id === id) {
+          index = i
+        }
+      }
+      this.fileList.splice(index, 1)
+    }
   }
 }
 </script>
@@ -304,8 +322,9 @@ export default {
 
 .breadcrumb {
   padding: 15px 20px;
-  font-size: 15px;
+  font-size: 18px;
   font-family: 'Microsoft YaHei';
+  font-weight: 600;
 }
 
 .upper {
@@ -393,16 +412,16 @@ export default {
 }
 
 .first {
-  background-color: #EA523F;
+  background-color: #FF8B83;
 }
 .second {
-  background-color: #5356FB;
+  background-color:#445895;
 }
 .third {
-  background-color: #F3A93A;
+  background-color: #ffba53;
 }
 .fourth {
-  background-color: #45905F;
+  background-color: #52aa71;
 }
 
 .file-icon {

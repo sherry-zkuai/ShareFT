@@ -5,8 +5,8 @@
           <div class="toggle-button" @click="toggleMenu()">
             <i :class="isCollapse?'el-icon-d-arrow-right':'el-icon-d-arrow-left'" :v-if="isCollapse==true"/>
           </div>
-          <el-menu background-color="#202B30" text-color="#fff" :collapse="isCollapse" :collapse-transition="false" router>
-            <el-menu-item index="/personalFile">
+          <el-menu background-color="#202B30" text-color="#fff" active-text-color="#ffd04b" :collapse="isCollapse" :collapse-transition="false">
+            <el-menu-item index="1" @click="gotoPersonal">
               <i class="el-icon-user"></i>
               <span slot="title">个人文档</span>
             </el-menu-item>
@@ -15,7 +15,7 @@
                 <i class='el-icon-chat-line-square'></i>
                 <span>团队文档</span>
               </template>
-              <el-menu-item v-for="item in groupList" :key="item.id" @click="gotoGroup(item.id)">
+              <el-menu-item index="2-1" v-for="item in groupList" :key="item.id" @click="gotoGroup(item.id)">
                 {{ item.groupName }}
               </el-menu-item>
             </el-submenu>
@@ -47,9 +47,14 @@ export default {
       this.isCollapse = !this.isCollapse
     },
     gotoGroup (groupId) {
+      window.sessionStorage.setItem('tab', '2')
       window.sessionStorage.setItem('groupId', groupId)
       // this.$router.push('/groupFile?id=' + groupId)
       this.$router.push('/groupFile')
+    },
+    gotoPersonal () {
+      window.sessionStorage.setItem('tab', '1')
+      this.$router.push('/personalFile')
     }
   }
 }

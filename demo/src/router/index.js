@@ -40,6 +40,10 @@ const routes = [
       {
         path: '/history',
         component: resolve => require(['../views/History'], resolve)
+      },
+      {
+        path: '/filePage',
+        component: resolve => require(['../views/Page'], resolve)
       }
     ]
   }
